@@ -1,0 +1,603 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>宠物MBTI性格测试</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: "微软雅黑", sans-serif;
+        }
+        body {
+            background-color: #f5f7fa;
+            padding: 20px;
+            max-width: 800px;
+            margin: 0 auto;
+        }
+        .container {
+            background: white;
+            border-radius: 12px;
+            padding: 30px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            margin-bottom: 20px;
+        }
+        h1 {
+            text-align: center;
+            color: #333;
+            margin-bottom: 30px;
+            font-size: 24px;
+        }
+        .question {
+            margin-bottom: 25px;
+            padding-bottom: 20px;
+            border-bottom: 1px solid #eee;
+        }
+        .question h3 {
+            color: #444;
+            margin-bottom: 15px;
+            font-size: 18px;
+        }
+        .options {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+        .option {
+            padding: 12px 15px;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+        .option:hover {
+            border-color: #667eea;
+            background-color: #f0f5ff;
+        }
+        .option.selected {
+            background-color: #667eea;
+            color: white;
+            border-color: #667eea;
+        }
+        .btn {
+            display: block;
+            width: 100%;
+            padding: 15px;
+            background-color: #667eea;
+            color: white;
+            border: none;
+            border-radius: 8px;
+            font-size: 16px;
+            cursor: pointer;
+            margin-top: 20px;
+            transition: all 0.2s;
+        }
+        .btn:hover {
+            background-color: #5569d1;
+        }
+        .result-page {
+            display: none;
+        }
+        .result-card {
+            background: #f8f9ff;
+            border-radius: 12px;
+            padding: 25px;
+            margin-top: 20px;
+        }
+        .result-title {
+            font-size: 22px;
+            color: #667eea;
+            margin-bottom: 15px;
+            text-align: center;
+        }
+        .result-desc {
+            line-height: 1.8;
+            color: #555;
+            margin-bottom: 15px;
+        }
+        .hidden {
+            display: none;
+        }
+    </style>
+</head>
+<body>
+    <div class="container" id="pet-type-page">
+        <h1>宠物MBTI性格测试</h1>
+        <div class="question">
+            <h3>1. 您的宠物是？</h3>
+            <div class="options">
+                <div class="option" onclick="selectPet('cat')">A. 猫咪</div>
+                <div class="option" onclick="selectPet('dog')">B. 狗狗</div>
+            </div>
+        </div>
+        <button class="btn" id="start-btn" onclick="startTest()" disabled>开始测试</button>
+    </div>
+
+    <!-- 猫咪题目 -->
+    <div class="container hidden" id="cat-questions">
+        <h1>猫咪专属MBTI测试</h1>
+        <!-- 2-21题 -->
+        <div class="question">
+            <h3>2. 家里来人时，你家猫会？</h3>
+            <div class="options">
+                <div class="option" onclick="selectOption(this, 'E,S,T,J')">A. 主动靠近好奇查看</div>
+                <div class="option" onclick="selectOption(this, 'I,N,F,P')">B. 立刻躲起来不见人</div>
+            </div>
+        </div>
+        <div class="question">
+            <h3>3. 你家猫更喜欢？</h3>
+            <div class="options">
+                <div class="option" onclick="selectOption(this, 'E,S,T,J')">A. 跟着人到处走粘人</div>
+                <div class="option" onclick="selectOption(this, 'I,N,F,P')">B. 自己独处安静发呆</div>
+            </div>
+        </div>
+        <div class="question">
+            <h3>4. 你家猫对新玩具/新猫窝态度？</h3>
+            <div class="options">
+                <div class="option" onclick="selectOption(this, 'E,S,T,J')">A. 立刻尝试不怕新事物</div>
+                <div class="option" onclick="selectOption(this, 'I,N,F,P')">B. 谨慎观察很久才碰</div>
+            </div>
+        </div>
+        <div class="question">
+            <h3>5. 你家猫表达需求方式？</h3>
+            <div class="options">
+                <div class="option" onclick="selectOption(this, 'E,S,T,J')">A. 直接叫/蹭人很直白</div>
+                <div class="option" onclick="selectOption(this, 'I,N,F,P')">B. 默默等待/用行动暗示</div>
+            </div>
+        </div>
+        <div class="question">
+            <h3>6. 你家猫的社交态度？</h3>
+            <div class="options">
+                <div class="option" onclick="selectOption(this, 'E,S,T,J')">A. 对同类/人都友好</div>
+                <div class="option" onclick="selectOption(this, 'I,N,F,P')">B. 只认主人、对他人警惕</div>
+            </div>
+        </div>
+        <div class="question">
+            <h3>7. 你家猫更关注？</h3>
+            <div class="options">
+                <div class="option" onclick="selectOption(this, 'E,S,T,J')">A. 眼前吃喝玩、现实需求</div>
+                <div class="option" onclick="selectOption(this, 'I,N,F,P')">B. 氛围、安全感、情绪感受</div>
+            </div>
+        </div>
+        <div class="question">
+            <h3>8. 你家猫的行为模式？</h3>
+            <div class="options">
+                <div class="option" onclick="selectOption(this, 'E,S,T,J')">A. 按习惯固定路线作息</div>
+                <div class="option" onclick="selectOption(this, 'I,N,F,P')">B. 随性、想干嘛就干嘛</div>
+            </div>
+        </div>
+        <div class="question">
+            <h3>9. 你家猫对变化（换粮/搬家）？</h3>
+            <div class="options">
+                <div class="option" onclick="selectOption(this, 'E,S,T,J')">A. 接受快、适应强</div>
+                <div class="option" onclick="selectOption(this, 'I,N,F,P')">B. 敏感、容易应激</div>
+            </div>
+        </div>
+        <div class="question">
+            <h3>10. 你家猫更喜欢玩？</h3>
+            <div class="options">
+                <div class="option" onclick="selectOption(this, 'E,S,T,J')">A. 互动游戏逗猫棒</div>
+                <div class="option" onclick="selectOption(this, 'I,N,F,P')">B. 自己玩、安静舔毛</div>
+            </div>
+        </div>
+        <div class="question">
+            <h3>11. 你家猫的吃饭习惯？</h3>
+            <div class="options">
+                <div class="option" onclick="selectOption(this, 'E,S,T,J')">A. 准时守碗、规律进食</div>
+                <div class="option" onclick="selectOption(this, 'I,N,F,P')">B. 看心情、吃两口就走</div>
+            </div>
+        </div>
+        <div class="question">
+            <h3>12. 你家猫犯错被说时？</h3>
+            <div class="options">
+                <div class="option" onclick="selectOption(this, 'E,S,T,J')">A. 无所谓、继续皮</div>
+                <div class="option" onclick="selectOption(this, 'I,N,F,P')">B. 害怕、躲起来、委屈</div>
+            </div>
+        </div>
+        <div class="question">
+            <h3>13. 你家猫对领地态度？</h3>
+            <div class="options">
+                <div class="option" onclick="selectOption(this, 'E,S,T,J')">A. 大方、不介意被碰</div>
+                <div class="option" onclick="selectOption(this, 'I,N,F,P')">B. 护窝、护食、占有欲强</div>
+            </div>
+        </div>
+        <div class="question">
+            <h3>14. 你家猫喜欢待在？</h3>
+            <div class="options">
+                <div class="option" onclick="selectOption(this, 'E,S,T,J')">A. 开阔地方（沙发/床中央）</div>
+                <div class="option" onclick="selectOption(this, 'I,N,F,P')">B. 隐蔽角落/高处暗处</div>
+            </div>
+        </div>
+        <div class="question">
+            <h3>15. 你家猫与人互动？</h3>
+            <div class="options">
+                <div class="option" onclick="selectOption(this, 'E,S,T,J')">A. 主动发起求摸求抱</div>
+                <div class="option" onclick="selectOption(this, 'I,N,F,P')">B. 被动、等你找它才回应</div>
+            </div>
+        </div>
+        <div class="question">
+            <h3>16. 你家猫性格更像？</h3>
+            <div class="options">
+                <div class="option" onclick="selectOption(this, 'E,S,T,J')">A. 大胆外向、好奇好动</div>
+                <div class="option" onclick="selectOption(this, 'I,N,F,P')">B. 胆小内向、安静慢热</div>
+            </div>
+        </div>
+        <div class="question">
+            <h3>17. 你家猫在陌生环境中？</h3>
+            <div class="options">
+                <div class="option" onclick="selectOption(this, 'E,S,T,J')">A. 探索、不慌不忙</div>
+                <div class="option" onclick="selectOption(this, 'I,N,F,P')">B. 紧张、缩成一团</div>
+            </div>
+        </div>
+        <div class="question">
+            <h3>18. 你家猫对你的情绪？</h3>
+            <div class="options">
+                <div class="option" onclick="selectOption(this, 'E,S,T,J')">A. 不太敏感、自顾自</div>
+                <div class="option" onclick="selectOption(this, 'I,N,F,P')">B. 很敏感、会过来安慰</div>
+            </div>
+        </div>
+        <div class="question">
+            <h3>19. 你家猫的作息更？</h3>
+            <div class="options">
+                <div class="option" onclick="selectOption(this, 'E,S,T,J')">A. 固定、规律、守时</div>
+                <div class="option" onclick="selectOption(this, 'I,N,F,P')">B. 混乱、熬夜、白天狂睡</div>
+            </div>
+        </div>
+        <div class="question">
+            <h3>20. 你家猫对指令（过来/吃饭）？</h3>
+            <div class="options">
+                <div class="option" onclick="selectOption(this, 'E,S,T,J')">A. 听得懂、配合度高</div>
+                <div class="option" onclick="selectOption(this, 'I,N,F,P')">B. 假装听不见、我行我素</div>
+            </div>
+        </div>
+        <div class="question">
+            <h3>21. 你家猫的整体气质？</h3>
+            <div class="options">
+                <div class="option" onclick="selectOption(this, 'E,S,T,J')">A. 阳光外放、小太阳</div>
+                <div class="option" onclick="selectOption(this, 'I,N,F,P')">B. 清冷内敛、高冷范</div>
+            </div>
+        </div>
+        <button class="btn" onclick="calculateResult()">提交测试</button>
+    </div>
+
+    <!-- 狗狗题目 -->
+    <div class="container hidden" id="dog-questions">
+        <h1>狗狗专属MBTI测试</h1>
+        <!-- 22-41题 -->
+        <div class="question">
+            <h3>22. 你家狗狗见到陌生人/狗？</h3>
+            <div class="options">
+                <div class="option" onclick="selectOption(this, 'E,S,T,J')">A. 热情扑人摇尾巴</div>
+                <div class="option" onclick="selectOption(this, 'I,N,F,P')">B. 淡定/躲开/不感兴趣</div>
+            </div>
+        </div>
+        <div class="question">
+            <h3>23. 你家狗狗出门状态？</h3>
+            <div class="options">
+                <div class="option" onclick="selectOption(this, 'E,S,T,J')">A. 兴奋爆冲、到处闻</div>
+                <div class="option" onclick="selectOption(this, 'I,N,F,P')">B. 从容随行、安静走路</div>
+            </div>
+        </div>
+        <div class="question">
+            <h3>24. 你家狗狗独处时？</h3>
+            <div class="options">
+                <div class="option" onclick="selectOption(this, 'E,S,T,J')">A. 焦虑叫/拆家/找你</div>
+                <div class="option" onclick="selectOption(this, 'I,N,F,P')">B. 安静睡觉/自己玩玩具</div>
+            </div>
+        </div>
+        <div class="question">
+            <h3>25. 你家狗狗对新环境？</h3>
+            <div class="options">
+                <div class="option" onclick="selectOption(this, 'E,S,T,J')">A. 立刻探索、不怕生</div>
+                <div class="option" onclick="selectOption(this, 'I,N,F,P')">B. 谨慎、慢慢适应</div>
+            </div>
+        </div>
+        <div class="question">
+            <h3>26. 你家狗狗的社交喜好？</h3>
+            <div class="options">
+                <div class="option" onclick="selectOption(this, 'E,S,T,J')">A. 喜欢跟所有狗玩</div>
+                <div class="option" onclick="selectOption(this, 'I,N,F,P')">B. 只跟固定伙伴玩</div>
+            </div>
+        </div>
+        <div class="question">
+            <h3>27. 你家狗狗更关注？</h3>
+            <div class="options">
+                <div class="option" onclick="selectOption(this, 'E,S,T,J')">A. 吃、玩、出门、现实需求</div>
+                <div class="option" onclick="selectOption(this, 'I,N,F,P')">B. 情绪、氛围、主人心情</div>
+            </div>
+        </div>
+        <div class="question">
+            <h3>28. 你家狗狗的行为习惯？</h3>
+            <div class="options">
+                <div class="option" onclick="selectOption(this, 'E,S,T,J')">A. 守规矩、有固定流程</div>
+                <div class="option" onclick="selectOption(this, 'I,N,F,P')">B. 随性、自由散漫</div>
+            </div>
+        </div>
+        <div class="question">
+            <h3>29. 你家狗狗的训练配合度？</h3>
+            <div class="options">
+                <div class="option" onclick="selectOption(this, 'E,S,T,J')">A. 学得快、愿意配合</div>
+                <div class="option" onclick="selectOption(this, 'I,N,F,P')">B. 学得慢、看心情配合</div>
+            </div>
+        </div>
+        <div class="question">
+            <h3>30. 你家狗狗喜欢游戏？</h3>
+            <div class="options">
+                <div class="option" onclick="selectOption(this, 'E,S,T,J')">A. 互动拔河/接球</div>
+                <div class="option" onclick="selectOption(this, 'I,N,F,P')">B. 自己啃咬/嗅闻探索</div>
+            </div>
+        </div>
+        <div class="question">
+            <h3>31. 你家狗狗对主人离开？</h3>
+            <div class="options">
+                <div class="option" onclick="selectOption(this, 'E,S,T,J')">A. 分离焦虑强</div>
+                <div class="option" onclick="selectOption(this, 'I,N,F,P')">B. 淡定接受、情绪稳定</div>
+            </div>
+        </div>
+        <div class="question">
+            <h3>32. 你家狗狗犯错被批评？</h3>
+            <div class="options">
+                <div class="option" onclick="selectOption(this, 'E,S,T,J')">A. 认错低头、讨好</div>
+                <div class="option" onclick="selectOption(this, 'I,N,F,P')">B. 无所谓、继续皮</div>
+            </div>
+        </div>
+        <div class="question">
+            <h3>33. 家里来快递/外卖，你家狗狗会？</h3>
+            <div class="options">
+                <div class="option" onclick="selectOption(this, 'E,S,T,J')">A. 狂叫提醒、看门</div>
+                <div class="option" onclick="selectOption(this, 'I,N,F,P')">B. 无视、继续睡</div>
+            </div>
+        </div>
+        <div class="question">
+            <h3>34. 你家狗狗更喜欢？</h3>
+            <div class="options">
+                <div class="option" onclick="selectOption(this, 'E,S,T,J')">A. 热闹多人陪伴</div>
+                <div class="option" onclick="selectOption(this, 'I,N,F,P')">B. 安静二人世界</div>
+            </div>
+        </div>
+        <div class="question">
+            <h3>35. 你家狗狗的性格能量？</h3>
+            <div class="options">
+                <div class="option" onclick="selectOption(this, 'E,S,T,J')">A. 精力旺盛、停不下来</div>
+                <div class="option" onclick="selectOption(this, 'I,N,F,P')">B. 慵懒佛系、不爱动</div>
+            </div>
+        </div>
+        <div class="question">
+            <h3>36. 你家狗狗对声音（打雷/鞭炮）？</h3>
+            <div class="options">
+                <div class="option" onclick="selectOption(this, 'E,S,T,J')">A. 不怕、淡定</div>
+                <div class="option" onclick="selectOption(this, 'I,N,F,P')">B. 害怕、发抖躲藏</div>
+            </div>
+        </div>
+        <div class="question">
+            <h3>37. 你家狗狗对小孩/小动物？</h3>
+            <div class="options">
+                <div class="option" onclick="selectOption(this, 'E,S,T,J')">A. 友好包容</div>
+                <div class="option" onclick="selectOption(this, 'I,N,F,P')">B. 警惕、保持距离</div>
+            </div>
+        </div>
+        <div class="question">
+            <h3>38. 你家狗狗出门爆冲？</h3>
+            <div class="options">
+                <div class="option" onclick="selectOption(this, 'E,S,T,J')">A. 经常拉不住</div>
+                <div class="option" onclick="selectOption(this, 'I,N,F,P')">B. 很少、随行很好</div>
+            </div>
+        </div>
+        <div class="question">
+            <h3>39. 你家狗狗的讨食态度？</h3>
+            <div class="options">
+                <div class="option" onclick="selectOption(this, 'E,S,T,J')">A. 直白扒腿、死缠烂打</div>
+                <div class="option" onclick="selectOption(this, 'I,N,F,P')">B. 默默看着、含蓄等待</div>
+            </div>
+        </div>
+        <div class="question">
+            <h3>40. 你家狗狗的整体气质？</h3>
+            <div class="options">
+                <div class="option" onclick="selectOption(this, 'E,S,T,J')">A. 阳光社牛、快乐修勾</div>
+                <div class="option" onclick="selectOption(this, 'I,N,F,P')">B. 温柔内向、治愈小天使</div>
+            </div>
+        </div>
+        <button class="btn" onclick="calculateResult()">提交测试</button>
+    </div>
+
+    <!-- 结果页面 -->
+    <div class="container result-page" id="result-page">
+        <h1>你的宠物MBTI性格结果</h1>
+        <div class="result-card">
+            <div class="result-title" id="mbti-type"></div>
+            <div class="result-desc" id="personality-traits"></div>
+            <div class="result-desc" id="personality-portrait"></div>
+            <div class="result-desc" id="getalong-tips"></div>
+        </div>
+        <button class="btn" onclick="restartTest()">重新测试</button>
+    </div>
+
+    <script>
+        // 全局变量
+        let selectedPet = '';
+        let scores = {
+            E: 0, I: 0,
+            S: 0, N: 0,
+            T: 0, F: 0,
+            J: 0, P: 0
+        };
+
+        // 选择宠物类型
+        function selectPet(petType) {
+            selectedPet = petType;
+            // 重置选项样式
+            document.querySelectorAll('#pet-type-page .option').forEach(opt => {
+                opt.classList.remove('selected');
+            });
+            event.target.classList.add('selected');
+            // 启用开始按钮
+            document.getElementById('start-btn').disabled = false;
+        }
+
+        // 开始测试
+        function startTest() {
+            document.getElementById('pet-type-page').classList.add('hidden');
+            if (selectedPet === 'cat') {
+                document.getElementById('cat-questions').classList.remove('hidden');
+            } else if (selectedPet === 'dog') {
+                document.getElementById('dog-questions').classList.remove('hidden');
+            }
+            // 重置分数
+            scores = { E: 0, I: 0, S: 0, N: 0, T: 0, F: 0, J: 0, P: 0 };
+        }
+
+        // 选择选项并计分
+        function selectOption(elem, dimensions) {
+            // 重置当前问题的选项样式
+            const parentOptions = elem.parentElement;
+            parentOptions.querySelectorAll('.option').forEach(opt => {
+                opt.classList.remove('selected');
+            });
+            elem.classList.add('selected');
+            
+            // 计分
+            const dims = dimensions.split(',');
+            dims.forEach(dim => {
+                scores[dim.trim()] += 1;
+            });
+        }
+
+        // MBTI结果配置
+        const mbtiResults = {
+            ENFP: {
+                title: "ENFP·快乐小疯子",
+                traits: "性格特点：外向热情、好奇心强、精力旺盛、乐观开朗，喜欢新鲜感和互动，情绪外露不藏事。",
+                portrait: "性格画像：像永动机一样精力过剩，见人就凑上去蹭/扑，听到动静就探头围观，玩具玩5分钟就腻，转头拆纸巾盒/咬拖鞋找新乐子；犯错被说时会用歪头杀/舔手撒娇蒙混过关，是家里的“气氛制造机”。",
+                tips: "相处技巧：1. 每天分2次互动（早10分钟+晚15分钟），猫咪用激光笔/逗猫棒追跑，狗狗走“绕圈路线”遛弯；2. 每周轮换3箱玩具，拿新玩具时“藏一点露一点”勾好奇心；3. 拆家时别骂，立刻递它最爱的玩具并说“玩这个”，转移注意力后夸它“真乖”。"
+            },
+            ISTJ: {
+                title: "ISTJ·高冷总裁",
+                traits: "性格特点：内向独立、自律严谨、谨慎慢热、忠诚稳重，注重规律和秩序，不喜欢突发变化。",
+                portrait: "性格画像：作息精准到“每天7点蹲碗等饭”，自己的窝/食盆绝不允许别人碰，陌生人靠近会默默后退但不炸毛，熟悉后会用“蹭腿+安静陪坐”表达信任，从不主动撒娇，但你坐下时会悄悄趴在你脚边。",
+                tips: "相处技巧：1. 固定喂食/换水时间（精确到分钟），别改它的生活节奏；2. 给它留专属空间（猫爬架顶层/狗窝角落），别强行抱它；3. 每天固定1次抚摸（比如晚9点摸下巴/后背），每次5分钟，到点就停。"
+            },
+            INFP: {
+                title: "INFP·温柔小天使",
+                traits: "性格特点：内向敏感、共情力强、温柔细腻、安静治愈，注重情绪和氛围，胆子偏小易受惊。",
+                portrait: "性格画像：声音轻轻软软，被抢玩具只会默默躲开，你哭的时候会凑过来用头蹭你手背，喜欢趴在你摊开的书本/键盘上（不是捣乱，是想陪你）；打雷时会钻进你怀里，爪子紧紧勾住你的衣服。",
+                tips: "相处技巧：1. 说话/开关门轻一点，家里来人提前把它抱到卧室关小灯；2. 工作时把它的窝放书桌下，脚轻搭窝边让它感受陪伴；3. 害怕时抱它在怀里，轻梳毛并耳语“不怕哦”，别开强光。"
+            },
+            ESTJ: {
+                title: "ESTJ·霸道管家",
+                traits: "性格特点：外向强势、有责任感、守规矩、护主顾家，喜欢主导和掌控，对规则有执念。",
+                portrait: "性格画像：会主动“巡逻”家里每个房间，听到门铃就冲到门口低吼（不是凶，是“我在保护家”）；吃饭时会盯着你，确认你也在吃才安心；遛狗时会走在你前面“开路”，猫咪会守在门口观察动静。",
+                tips: "相处技巧：1. 出门前让狗狗“叼拖鞋”，猫咪可让它“检查食盆”，完成后夸“好管家”；2. 明确规则（比如“沙发只能坐垫子上”），违规时轻轻抱到指定位置；3. 它冲陌生人低吼时，蹲下来摸它脖子说“我知道你在保护我”，同时挡在它身前。"
+            },
+            ESFP: {
+                title: "ESFP·撒娇粘人精",
+                traits: "性格特点：外向活泼、粘人依赖、热情直白、享乐主义，喜欢肢体接触，离不开主人陪伴。",
+                portrait: "性格画像：你起床它扒枕头，你洗澡它蹲门口，你上厕所它扒门缝；看电视时会用爪子拍你胳膊，要求你摸它直到它睡着；出门回来会围着你转三圈，尾巴甩得像螺旋桨（猫咪翘尾巴蹭腿）。",
+                tips: "相处技巧：1. 把它的窝放你枕头旁/床脚，猫咪可铺小毯子在床头，别关笼子；2. 出门前抱30秒说“我很快回来”，回家后先抱1分钟再换鞋；3. 出门久时留带你味道的玩具+放舒缓音乐，减少分离焦虑。"
+            },
+            INTJ: {
+                title: "INTJ·腹黑心机派",
+                traits: "性格特点：内向聪慧、心思缜密、独立高冷、善于观察，有自己的小算盘，不轻易表露情绪。",
+                portrait: "性格画像：会观察你开关抽屉的动作，偷偷学会开零食柜；犯错后会“嫁祸”给另一只宠物（比如把打翻的水杯推到同伴旁边）；你假装哭时，它会先蹲在旁边看5分钟，确认你是真的难过才过来蹭你。",
+                tips: "相处技巧：1. 猫咪用机关猫盒，狗狗用漏食球，把零食藏里面让它自己研究获取；2. 别主动找它玩，把玩具放它常待的地方“忘收”，等它玩嗨了再互动；3. 它“嫁祸”时，抱它到案发现场说“是你弄的吧”，同时拿零食引导认错。"
+            },
+            ISFJ: {
+                title: "ISFJ·温顺乖乖宝",
+                traits: "性格特点：内向温柔、乖巧懂事、体贴包容、逆来顺受，不喜欢冲突，擅长默默陪伴。",
+                portrait: "性格画像：剪指甲/洗澡从不挣扎，哪怕你弄疼它也只会轻轻哼一声；你加班晚归，它会蹲在门口等你，哪怕睡着了也会听到钥匙声立刻抬头；吃零食时会先叼到你面前，等你摸它头才肯吃。",
+                tips: "相处技巧：1. 每天摸它鼻子（检查湿凉）、看爪子伤口，狗狗遛弯看是否瘸腿；2. 家里来客人时，让客人“伸手给它闻”，别强行抱它；3. 每天晚8点让它趴你腿上揉耳朵，把这个当成比零食珍贵的奖励。"
+            },
+            ENFJ: {
+                title: "ENFJ·暖心社交家",
+                traits: "性格特点：外向友善、共情力强、善于社交、有领导力，喜欢调解矛盾，对人对事都热心。",
+                portrait: "性格画像：家里来客人会主动凑过去蹭腿，哪怕是怕宠物的人，它也会放慢动作轻轻闻；别的宠物吵架时，它会用身体把两者隔开，还会分别舔舔它们的头“劝架”；你朋友哭时，它会蹲在对方脚边，把爪子搭在人家膝盖上。",
+                tips: "相处技巧：1. 每周带它见1次新伙伴，见面让它们闻屁股，主动互动就夸“你真会交朋友”；2. 它“劝架”时，蹲下来摸头说“我们没事啦”并给零食；3. 带狗狗出门别玩手机，偶尔蹲下来扔球；猫咪可用猫包带它去安静公园，让它趴你腿上看风景。"
+            },
+            ENTP: {
+                title: "ENTP·调皮好奇鬼",
+                traits: "性格特点：外向跳脱、脑洞大开、好奇多动、不拘小节，喜欢恶作剧和新鲜事物，精力旺盛。",
+                portrait: "性格画像：猫咪会把卷纸扯成“雪花地毯”，狗狗会扒花盆里的土，然后蹲在旁边看你生气的样子；玩逗猫棒/扔球时会故意跳错方向，逗你跟着它跑；听到手机响会凑过去扒屏幕，以为是“新玩具”。",
+                tips: "相处技巧：1. 准备耐造玩具（猫咪用纸箱城堡，狗狗用橡胶啃咬球），让它拆得有“正当理由”；2. 它扒卷纸/花盆时你假装抢，它会立刻把东西藏起来（反而不拆了）；3. 每天留10分钟“疯玩时间”，让它把调皮劲发泄完，其余时间会老实很多。"
+            },
+            INFJ: {
+                title: "INFJ·温柔洞察家",
+                traits: "性格特点：内向敏感、洞察力强、灵性十足、善解人意，能感知他人情绪，喜欢安静陪伴。",
+                portrait: "性格画像：你加班时会趴在你键盘旁，用尾巴轻轻扫你的手腕；你和家人吵架时，它会先蹭你，再蹭对方，来回“调解”；你生病躺在床上，它会叼来自己最喜欢的玩具放在你枕头边。",
+                tips: "相处技巧：1. 别在它面前藏情绪，难过时直接说“我有点不开心”；2. 给它准备软窝，让它蜷在里面“思考你的心情”；3. 它蹭你时摸头说“我知道啦”，让它觉得关心被接收。"
+            },
+            ESTP: {
+                title: "ESTP·随性乐天派",
+                traits: "性格特点：外向随性、乐观开朗、适应力强、热爱自由，不喜欢被约束，活在当下。",
+                portrait: "性格画像：出门遛弯会跟着蝴蝶跑，把你拽得东倒西歪，回头看你跟不上还会停下来等；吃饭时会把粮叼到地毯上吃，吃完再用爪子把粮粒扒回碗里（主打一个随性）；被骂了转头就忘，下一秒又叼着玩具找你玩。",
+                tips: "相处技巧：1. 遛狗时穿运动鞋，随时配合它的“冲刺模式”；猫咪可多放几个活动点，让它自由探索；2. 别逼它守规矩，用“零食诱惑”引导（比如“放玩具回去给肉干”）；3. 它跑远后会回头等你，这时候冲它招手，它会更开心地跑回来。"
+            },
+            ISFP: {
+                title: "ISFP·温柔艺术家",
+                traits: "性格特点：内向安静、温柔细腻、热爱美好、享受独处，喜欢舒适环境，不喜欢热闹。",
+                portrait: "性格画像：喜欢趴在阳光里舔毛，能舔半小时不动；看到窗外的鸟会静静蹲在窗边看，尾巴轻轻晃；你画画/写字时，它会趴在画纸/笔记本旁边，用爪子轻轻碰你的笔。",
+                tips: "相处技巧：1. 给它留“阳光角落”放软垫子，让它能待一下午；2. 别开闪光灯拍照，会吓得它钻床底；3. 陪它“发呆”：你坐旁边看手机，它趴你腿上晒太阳，就是它最幸福的时刻。"
+            },
+            ENTJ: {
+                title: "ENTJ·霸气领导者",
+                traits: "性格特点：外向强势、自信果断、有气场、领地意识强，喜欢主导一切，有王者风范。",
+                portrait: "性格画像：家里的其他宠物都听它的——吃饭它先吃，玩具它先挑，睡觉要占最大的窝；出门遛弯会走在最前面，遇到别的宠物挑衅会立刻炸毛，非要等对方夹尾巴走才罢休；你叫它名字，它会等你重复第三遍才慢悠悠抬头。",
+                tips: "相处技巧：1. 别跟它争地位，它占沙发你就坐旁边椅子；2. 奖励用“专属零食”（只有它能吃的那种），满足它的优越感；3. 它护食时别抢，等它吃完再添粮，让它觉得“你懂我的规矩”。"
+            },
+            INTP: {
+                title: "INTP·佛系思考者",
+                traits: "性格特点：内向佛系、淡定随性、喜欢独处、好奇心浅，对很多事都无所谓，享受放空状态。",
+                portrait: "性格画像：能趴在同一个地方看窗外2小时，连尾巴都不动；玩具掉在地上懒得捡，你递过去它才勉强扒拉两下；你喊它过来，它会抬眼看你一下，然后继续趴在原地（心里：“有事？”）。",
+                tips: "相处技巧：1. 别强行拉它互动，它装睡时就随它去；2. 把水碗/食盆放它常待的地方，省得它“懒得动”而饿肚子；3. 用奇怪声音（捏塑料瓶）吸引它，它会因为好奇短暂起身。"
+            },
+            ESFJ: {
+                title: "ESFJ·贴心小管家",
+                traits: "性格特点：外向体贴、热心肠、懂事顾家、粘人忠诚，喜欢照顾主人，擅长察言观色。",
+                portrait: "性格画像：你出门前狗狗会叼着你的拖鞋放门口，猫咪会蹭你的裤腿提醒；你熬夜时会叼来小毯子放在你腿上，还会用头蹭你胳膊催你睡觉；家里的垃圾篓倒了，狗狗会用爪子扒到墙角，猫咪会蹲在旁边“监督”。",
+                tips: "相处技巧：1. 配合它的“贴心行为”：比如它叼拖鞋，你说“谢谢我的小管家”，它会更积极；2. 别拒绝它的“礼物”——哪怕它叼来的是脏袜子/小石子，也要接过来摸它的头；3. 让它参与你的日常：比如你叠衣服时，把袜子放在它旁边，它会当成“帮你干活”。"
+            },
+            ENFJ: {
+                title: "ENFJ·快乐小太阳",
+                traits: "性格特点：外向乐观、热情似火、社交达人、活力满满，治愈力强，对世界充满善意。",
+                portrait: "性格画像：看到你就摇尾巴/翘尾巴，声音又软又甜，走两步就回头看你有没有跟上；遇到别的宠物会主动凑过去闻屁股，哪怕被凶了也会摇着尾巴再试一次；你假装摔倒，它会立刻冲过来舔你的脸，急得转圈。",
+                tips: "相处技巧：1. 每天出门前跟它“击掌”（猫咪可碰鼻子），当成“今天会开心”的信号；2. 别让它被别的宠物凶，它会委屈得耷拉尾巴，半天缓不过来；3. 多夸它“你笑得真好看”，它会把尾巴甩得更欢，甚至会用爪子拍你手心求夸。"
+            }
+        };
+
+        // 计算并显示结果
+        function calculateResult() {
+            // 确定每个维度的结果
+            const EorI = scores.E > scores.I ? 'E' : 'I';
+            const SorN = scores.S > scores.N ? 'S' : 'N';
+            const TorF = scores.T > scores.F ? 'T' : 'F';
+            const JorP = scores.J > scores.P ? 'J' : 'P';
+            const mbtiType = EorI + SorN + TorF + JorP;
+
+            // 隐藏题目页面，显示结果页面
+            document.getElementById('cat-questions').classList.add('hidden');
+            document.getElementById('dog-questions').classList.add('hidden');
+            document.getElementById('result-page').classList.remove('result-page');
+
+            // 显示结果
+            const result = mbtiResults[mbtiType] || mbtiResults.ENFP; // 默认结果
+            document.getElementById('mbti-type').textContent = result.title;
+            document.getElementById('personality-traits').textContent = result.traits;
+            document.getElementById('personality-portrait').textContent = result.portrait;
+            document.getElementById('getalong-tips').textContent = result.tips;
+        }
+
+        // 重新测试
+        function restartTest() {
+            // 重置所有页面
+            document.getElementById('result-page').classList.add('result-page');
+            document.getElementById('pet-type-page').classList.remove('hidden');
+            // 重置选项样式
+            document.querySelectorAll('#pet-type-page .option').forEach(opt => {
+                opt.classList.remove('selected');
+            });
+            document.getElementById('start-btn').disabled = true;
+            selectedPet = '';
+        }
+    </script>
+</body>
+</html>
